@@ -165,7 +165,7 @@ napr.: `<input type="text" onChange={props.changed} value={props.name} />`
 
 ### styling
 nezabudnut importovat css subory do js -> funguje to vdaka webpacku, importujeme aj s priponou css
--webpack dynamicky injektuje styly do html sablon -> v zdrojaku potom vidiet nove <style> tagy
+-webpack dynamicky injektuje styly do html sablon -> v zdrojaku potom vidiet nove `<style>` tagy
 !vsetky styly definovane v css subore su globalne
 
 -namiesto css suborov mozme pouzivat aj inline styly, napr. ich v render funkcii vlozim do konstanty ako objekt {}, ale vsetky nazvy css properties pouzivaju namiesto pomlciek cammelCase - vyhoda - su v jednom scope s komponetom, nie su globalne
@@ -543,10 +543,11 @@ do jednotlivych paths sa uzivatal dostava pomocou klasickeho odkazu `<a href="/r
 -na zamedzenie tohto javu pouzijeme Link importovany z react-router-dom vkomponente kde definujeme jednotilive <Route /> elementy
 `import { Route, Link } from 'react-router-dom';`
 
-ako odkazy potom nepouzivame elementy <a> ale <Link> a to nasledovne:
+ako odkazy potom nepouzivame elementy `<a>` ale `<Link>` a to nasledovne:
 `<Link to="/">Home</Link>`
 
 `<Link to={{pathname: '/new-post', hash: '#submit', search: '?quck-submit=true'}}>New Post</Link>`
+
 -v linku mozem takisto pouzit prop. **exact** - to iste ako v route
 
 **Nove props pri routingu**
@@ -568,7 +569,7 @@ ako odkazy potom nepouzivame elementy <a> ale <Link> a to nasledovne:
 **Zistovanie aktivnej route**
 namiesto Link pouzijem **NavLink** (obsahuje nejake props naviac)
 `import { Route, NavLink } from "react-router-dom"`
--bezny Link sa po kompilacii premeni na <a>, NavLink vytvori <a> s pridanou triedou -> `<a class="active">`
+-bezny Link sa po kompilacii premeni na `<a>`, NavLink vytvori `<a>` s pridanou triedou -> `<a class="active">`
 -takto mozem nastylovat link ktory je prave aktivny, v reacte moze byt aktivnych aj viac linkov naraz, preto napr. pri path "/" pouzivame **exact** aby bola aktivna vyhradne jedna cesta
 
 -nemusime pouzivat defaultnu triedu .active ale vytvorit vlastnu, staci ked v `<NavLink>` doplnime `activeClassName="nazovTriedy”`
@@ -665,7 +666,7 @@ pridal som komponent pomocou `import Komponent from "../cesta";`
 
 **po novom**
 pridame HOC - asyncComponent.js
-````js
+```js
 import React, { Component } from "react”
 
 const asyncComponent = importComponent => {
@@ -722,8 +723,8 @@ const AsyncKomponent= asyncComponent(() =>import("./cesta-ku-komponentu"));
 **!!!ROUTING AND SERVER DEPLOYMENT**
 -bezny web funguje tak ze uzivatel posle poziadavku na server, server ju obdrzi a vrati dokument zo zdroja (ak ho najde), v pripade React Appky by ale nenasiel ziadnu z nadefinovanych routes pretoze aplikacia je single page, preto musi byt server, na ktory React Appku umiestnime, nastaveny tak aby vzdyvracal **index.html!!!**, dokonca aj v pripade 404 -> chyby si uz osetrime sami v React Appke, pretoze server vrati index.html aj v pripade ze bude cast URL nespravna
 
--ak mam vlastnu domenu napr. mojaapka.com/ nie je treba nic specialne konfigurovat
--rozdiel je ak je moja apka na inej domene napr. nejakadomena.com/mojaapka musim nastavit base path
+-ak mam vlastnu domenu napr. mojaapka.bla/ nie je treba nic specialne konfigurovat
+-rozdiel je ak je moja apka na inej domene napr. nejakadomena.bla/mojaapka musim nastavit base path
   -tam kde mam browser router pridam prop **basename=**"/mojaapka"
 
 ### React.Fragment
@@ -914,29 +915,24 @@ v mapDsipatchToProps potom zapisem:
 onIncrementCounter: () => dispatch(increment()),
 
 vacsinou je akcii viac takze zapisem:
-### import * as actionCreators from "../../store/actions/actions";
+```js
+import * as actionCreators from "../../store/actions/actions";
 
-### onIncrementCounter: () => dispatch(actionCreators.increment()),...
+onIncrementCounter: () => dispatch(actionCreators.increment()),...
+```
 
+**Asynchronne volanie**
+pre asynchronne spravanie pridam middleware (hook medzia akciou a reducerom), pouzijem kniznicu **redux-thunk**
+`npm install --save redux-thunk`
 
-### Asynchronne volanie
-
-### pre asynchronne spravanie pridam
-### middleware
-### (hook medzia akciou a reducerom), pouzijem kniznicu
-### redux-thunk
-
-### npm install --save redux-thunk
-
-
-### v index.js
-
+**v index.js**
+```js
 import thunk from "redux-thunk";
 const store = createStore(
  rootReducer,
  composeEnhancers(applyMiddleware(logger, **thunk**))
 );
-
+```
 ### teraz mozem v actions.js definovat akciu (storeResult), ktora bue asynchronne volat inu akciu(saveResult)
 
 export const **storeResult** = res => {
