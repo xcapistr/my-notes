@@ -202,7 +202,7 @@ potrebna konfiguracia:
 najskor zavolame script npm run eject aby sme povolilizmeny konfiguracie
 pribudnu 2 zlozky: config, scripts
 otvorime config -> **webpack.config.js** a upravime
-```json
+```
 test: cssRegex,
 exclude: cssModuleRegex,
 use: getStyleLoaders({
