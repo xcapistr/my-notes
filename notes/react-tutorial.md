@@ -1,11 +1,7 @@
 [< back](../README.md)
 # REACT TUTORIAL
-odkazy:
- [https://jsbin.com](https://jsbin.com/) 
- [https://codepen.io](https://codepen.io/) 
-[React – A JavaScript library for building user interfaces](https://reactjs.org/)
-
-
+![](../img/react.jpeg)
+odkazy: [reactjs.org](https://reactjs.org/), [jsbin.com](https://jsbin.com/), [codepen.io](https://codepen.io/) 
 ### REACT
 JS kniznica pre UI
 
