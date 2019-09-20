@@ -6,7 +6,8 @@ odkazy: [reactjs.org](https://reactjs.org/), [jsbin.com](https://jsbin.com/), [c
 JS kniznica pre UI
 
 #### Easy start
-`npx create-react-app`
+`npx create-react-app <nazov-apky>`
+
 npx je sucast npm 5.2+
 
 ### Babel 
