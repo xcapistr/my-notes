@@ -5,6 +5,10 @@ odkazy: [reactjs.org](https://reactjs.org/), [jsbin.com](https://jsbin.com/), [c
 ### REACT
 JS kniznica pre UI
 
+#### Easy start
+`npx create-react-app`
+npx je sucast npm 5.2+
+
 ### Babel 
 -kompiluje kod napisany v reacte(specialitky ako napr. JSX) a es6(>) do bezneho JS pre prehliadac
 -zakladny komponent moze byt napisany ako funkcia (s velkym pismenom), ktora vrati JSX
