@@ -4,6 +4,7 @@
 ### Instalacia
 **globalne**
 `npm i -g testcafe`
+
 **lokalne**
 `npm i --save-dev testcafe`
 

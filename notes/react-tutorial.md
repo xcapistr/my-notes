@@ -87,6 +87,23 @@ for (let key in data) {
   console.log({nazov: key, hodnota: data[key]});
 }
 
+**.reduce(prev, curr)**
+-JS funkcia nad polom, vykona funkciu-**reducer** na vsetkych prvkoch pola a vrati jeden vystup
+-parametre: reducer, init hodnota
+-**reducer** moze mat 4 parametre: accumulator/acc, currentValue/cur, currentIndex/idx, sourceArray/src
+```js
+const array1 = [1, 2, 3, 4];
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+// 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer));
+// expected output: 10
+
+// 5 + 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer, 5));
+// expected output: 15
+```
+
 ### workflow
 * dependency mngmnt tool: npm/yarn
 * bundler: webpack
@@ -222,15 +239,15 @@ viac info o moduloch: [https://github.com/css-modules/css-modules](https://githu
 -vnutri {} mozme pouzit terarny operator (if nemozno pouzit pretoze ide o blokovy prikaz a v {} mozme pouzit len jednoduche)
 -v render funkcii sa da teda napisat: `{ podmienka ? <elementy> : null }`
 
-! lepsie:podmienka && <element>
+! lepsie:`podmienka && <element>`
 
 2.sposob (doporuceny):
 -render funkcia je volana vzdy ked sa zmeni stav, este pred return() si mozem do nejakej premennej nahrat JSX komponentu ktory chcem skryvat (resp. podla podmienok rozhodnem co do tejto premennej zapisem, napr. aj null),
--v render funkcii v return() potom vlozim tuto premennu
+-v render funkcii v `return()` potom vlozim tuto premennu
 
 ### Debugging*
 -normalne v chrome alebo vs code
-vyhodenie chyby -> throw new Error('Chybova hlaska');
+vyhodenie chyby -> `throw new Error('Chybova hlaska')`
 
 **ErrorBoundary**
 -nova feature react 16
@@ -304,7 +321,7 @@ const withClass = (WrappedComponent, className) => {
 ```
 
 ### Fragment 
--da sa ale pouzit aj uplne prazdny komponent (od reactu 16.2) - vsetky elemeny v render funkcii zabalime do <> </>
+-da sa ale pouzit aj uplne prazdny komponent (od reactu 16.2) - vsetky elemeny v render funkcii zabalime do `<> </>`
 
 ### Spravne pouzivanie setState
 -v setState by sme sa nemali odkazovat na this.state_ - napr. ak by sme nastavovali 
@@ -318,7 +335,7 @@ this.setState((prevState, props) => {
 -> spravne je parametrom setState funkcia
 
 ### Validovanie properties
-**PropTypes**: number, string, func, object, bool, array, symbol, node, element, oneOfType([...]), arrayOf([...]) ............
+**PropTypes**: number, string, func, object, bool, array, symbol, node, element, oneOfType([...]), arrayOf([...]) ...
 
 `npm install --save prop-types`
 `import PropTypes from 'prop-types'`
@@ -341,7 +358,7 @@ dalej mozme retazit s typom napr. .isRequired
 ### Reference("ref")
 ref je specialna property ako napr. key, vdaka nej mozme vytvorit odkaz na element
 len v statefull komponentoch
-napr. mame v JSX element <input>, dame mu property `ref={(inp) => {this.odkazNaInput = inp}}`
+napr. mame v JSX element `<input>`, dame mu property `ref={(inp) => {this.odkazNaInput = inp}}`
 teraz mame vytvoreny odkazNaInput ku ktoremu mozme v ramci triedy pristupovat cez this
 !!!nepouzivat na stylovanie
 
@@ -349,7 +366,7 @@ v novej verzii reactu (od 16.3) uz v konstruktore definujem:
 `this.odkazNaInput = react.createRef()`
 v rendrovanom JSX potom elementu `<input>` dam property `ref={this.odkazNaInput}`
 
-!!!ak by som chcel volat napr. metodu focus() nad inputom, v prvom pripade by stacilo
+!!!ak by som chcel volat napr. metodu `focus()` nad inputom, v prvom pripade by stacilo
 `this.inputElement.focus()` ale v druhom pripade musim napisat (specifikovat **current**)
 `this.inputElement.current.focus()`
 
@@ -385,7 +402,7 @@ export const SomeContext = React.createContext(false)
 **Consumer**
 klasicky `import { SomeContext } from '...'`
 potom v JSX napr.:
-```
+```jsx
 <SomeContext.Consumer>
 {hodnota=> (hodnota? <p>Hodnota je true</p> : null)}
 </SomeContext.Consumer>
@@ -406,8 +423,9 @@ potom v JSX napr.:
 -plan je dolezity aj ked sa pri implementacii zrejme niekolkokrat zmeni
 -stav ma byt definovany v komponente ktory je na nom naozaj zavisly a nie vzdy nad celou aplikaciou
 -ak chcem pouzivat css moduly, je potreba pouzit npm run eject,...(zmenu konfiguracie pozri vyssie)
--ak chcem iportovat fonty (najlepsie z google fonts) vlozim link do hlavicky v ._public_index.html
+-ak chcem iportovat fonty (najlepsie z google fonts) vlozim link do hlavicky v `._public_index.html`
 -bezna struktura na zaciatku:
+```
 .src/
   -components/   --> stateless
    -layout/
@@ -415,11 +433,7 @@ potom v JSX napr.:
   -containers/ --> statefull
   -assets/
  -hoc/
-
-### .reduce(prev, curr)
--obyc. JS funkcia
--transformuje pole
--parametre: predchadzajuca hodnota, sucastna hodnota
+```
 
 ### HTTP
 -json placeholder: [https://jsonplaceholder.typicode.com/](https://jsonplaceholder.typicode.com/) 
@@ -728,277 +742,23 @@ const AsyncKomponent= asyncComponent(() =>import("./cesta-ku-komponentu"));
 -nahradzuje predosle auxilary HOC
 
 ### String to Number
-retazec = '89';
-cislo = +retazec;
+`retazec = '89'`
+`cislo = +retazec`
 
 alebo
-retazec = '89.5';
-cislo = Number.parseFloat(retazec);
+`retazec = '89.5'`
+`cislo = Number.parseFloat(retazec)`
+`cislo = Number.parseInt(retazec)`
 
 ### event.preventDefault
--ak chcem zabranit odoslaniu requestu
+-ak chcem zabranit odoslaniu requestu (celkovo zabranit defaultnemu spravaniu eventu)
 
 ### zaokruhlovanie
-cislo.toFix(pocetMiest);
+`cislo.toFix(pocetMiest)`
 
+### REDUX
 
-
-## REDUX
- [https://redux.js.org](https://redux.js.org/) 
-management stavu, ktory je ulozeny v centralnom store
-npm install --save redux
-
-const redux = require('redux');
-
-**1.**najskor treba vytvorit**reducer** - 2 argumenty - state (sem priradim pociatocny stav) a action
-const rootReducer = (state = initialState, action) => {
-  return state;
-};
-
-**2.**potom vytvorim **store**(najlepsie v index.js, vid bod 6)
-### const store = redux.createStore(rootReducer);
-
-
-k stavu sa potom dostanem cez store
-store.getState();
-
-**3.**definovanie dispatching **action** (povinny argument type a hodnota je uppercase, dalsie argumenty su additional info) - nemusim ju rovno dispatchovat, funkcie si vacsinou preddefinujem v mapDispatchToProps, nasledujuci priklad je priame dispatchovanie(vykonanie) akcie:
-store.dispatch({ type: 'ADD_COUNTER', value: 10 });
-
-**4.**pridanie funkcii do reducera
-const rootReducer = (state = initialState, action) => {
- if (action.type === "INC_COUNTER") {
-   const newState = Object.assign({}, state);
-   newState.counter = state.counter + 1;
-   returnnewState;
-  }
- return state;
-};
-
-kratsi zapis
-constrootReducer= (state=initialState,action)=>{
- if(action.type==="INC_COUNTER") {
-  return{
-    ...state,
-    counter: state.counter+ 1
-   };
-  }
- returnstate;
-};
-
-!!!state niekdy priamo nemenime, vzdy treba urobit kopiu a tu vratit
-
-**5. Subscription** - definujem hned po store - reaguje na kazdu zmenu/akciu, napr:
-store.subscribe(() => {
- console.log("[Subscription]", store.getState());
-});
-
--store vytvorim v index.js, reducer sem importujem
-import { createStore } from 'redux';
-const store = createStore(reducer);
-
--reducery vytvaram v samostatnych suboroch, root reducer:._src_store/reducer.js
--v rootReduceri inicializujem aj stav (initialState)
-
-**6.**pripojenie reduxu do reactu - potrebujem package react-redux
-npm install --save react-redux
-
-potom v index.js importujem **provider** a zabalim do neho app komponent
-import { Provider} from "react-redux";
-ReactDOM.render(<Provider store={store}><App _><_Provider>, document....
-**pripojenie store do reactu** -v jednotlivych komponentoch potom nastavujem pripojenie:
-import { connect } from "react-redux";
-
-pred exportom komponentu musim vyriesit namapovanie stavu a dispatch do props,
-connect nie je HOC ale funkcia ktora vracia HOC, exportujemnasledovne:
-
-const mapStateToProps = state => {
- return {
-  ctr: state.counter
- }
-}
-
-const mapDispatchToProps = dispatch => {
- return {
-  onIncrementCounter: () => dispatch({ type: "INCREMENT" })
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
-
--namapovanim state do props (mimo triedu) si vyberiem atributy stavu a budem ich pouzivat ako props, takze uz sa nebudem odkazovat stylom state.counterale props.ctr, zaroven uz nepotrebujem uchovavat state v komponente
-
-!ked pridavam prvok do pola pomocou**push()** menim povodne pole, ak pouzijem **concat()** vytaram novu kopiu pola, pomocou **filter()** tiez vytvaram kopiu
-
-**Outsorising typovakcii v reduxe**
-actions do samostatneho suboru ._src_store/actions.js - tu exportujem konstanty s nazvami akcii aby v buducnosti nedochadzalo ku preklepom:
-
-export const NEJAKA_AKCIA = 'NEJAKA_AKCIA';
-
-potom do reducer.js importujem
-import * as actionTypes from './actions';
-
-case actionTypes.NEJAKA_AKCIA....
-
-**Kombinovanie reducerov**
-v index.js
-import { combineReducers } from 'redux';
-
-const rootReducer = combineReducers({
- ctr: counterReducer,
- res: resultReducer
-});
-
-potom pristupujem kstate s jednym zanorenim naviac: state.ctr.counter
--nevyhoda - kazdy reducer ma svoj stav, takze nemozem v jednom reduceri nahliadnut do stavu druheho
-
-**Typy stavu**
-nie vsetok state musime manageovat pomocou reduxu
--local UI state - napr. show/hide modal - netreba redux
--persistentny stav - napr. uzivatelia, orders,... - vacsina stavu je na servri (DB), relevantna cast moze byt manageovana reduxom
--client state - napr. is Auth? filters set by user - definitivne manageovat reduxom
-
-**REDUX ADVANCED**
--zapojenie middleware do projektu (medzi dispach akcii a reducery - ked chcem urobit nieco z akciou pred tym ako dojde do reducera (napr. log))
--middleware - funkcie/kod ktore hooknem do procesu a ktore sa potom vykonaju ako sucast procesu bez toho zeby sa zastavil
-
-v index.js (tam kde vytvaram store)
-
-import {**applyMiddleware compose** } from "redux";
-
-const **logger** = store => {
- return next => {
- return action => {
-  console.log("[Midleware] Dispatching", action);
-  const result = next(action);
-  console.log("[Middleware] next state", store.getState());
-  return result;
-  };
- };
-};
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
- rootReducer,
- composeEnhancers(applyMiddleware(logger))
-);
-
-
--toto bude vypisovat logy vzdy, ked sa dispatchne nejaka akcia
-
-**redux devtool for chrome**
- [https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) 
- [https://github.com/zalmoxisus/redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension) 
--zapojenie je o nieco zlozitejsie ked pouzivame middleware
--prave na to pouzivame **composeEnhancers**
--potom mozem vo vyvojarskych nastrojoch sledovat postupne zmeny stavu a prechadzat medzi nimi
-
-Asynchronne funkcie (vracajuce propmisy) - nejdu len tak pridat do reducera
-**async kod** v reduceri volame cez **action creator** (definujeme v ._src_store_actions_actions.js)
-definovanie akcie:
-export const increment = () => {
- return {
-  type: INCREMENT
- };
-};
-
--konvencia je pomenovat funkciu rovnako ako typ ale s cammelCase
-
-tam kde ju dispatchujem potompridam import
-import { increment } from ".._.._store_actions_actions";
-
-v mapDsipatchToProps potom zapisem:
-onIncrementCounter: () => dispatch(increment()),
-
-vacsinou je akcii viac takze zapisem:
-```js
-import * as actionCreators from "../../store/actions/actions";
-
-onIncrementCounter: () => dispatch(actionCreators.increment()),...
-```
-
-**Asynchronne volanie**
-pre asynchronne spravanie pridam middleware (hook medzia akciou a reducerom), pouzijem kniznicu **redux-thunk**
-`npm install --save redux-thunk`
-
-**v index.js**
-```js
-import thunk from "redux-thunk";
-const store = createStore(
- rootReducer,
- composeEnhancers(applyMiddleware(logger, **thunk**))
-);
-```
-### teraz mozem v actions.js definovat akciu (storeResult), ktora bue asynchronne volat inu akciu(saveResult)
-
-export const **storeResult** = res => {
- console.log(res);
- return dispatch => {
-  setTimeout(() => {
-   dispatch(**saveResult**(res));
-    }, 2000);
-  };
-};
-
-**!**Kde umiestnit **logicke operacie**? Do **Action Creatora**alebo do**Reducera**
-action creator - tu moze byt asynchronny kod, nemal by sa tu prilis pripravovat update stavu
-reducer - len synchronny kod, zakladny redux koncept - update stavu
-
-**getState v action creatore**
-action creator- redux-thunk moze mat v creatore dalsi atribut - getState
-takto mozme pristupit k stavuhned pred tym nez sa asynchronnedispatchne nejaka akcia:
-
-export const storeResult = res => {
-  console.log(res);
- return (dispatch, **getState**) => {
-  setTimeout(() => {
-   const oldCounter = **getState()**.ctr.counter;
-   console.log("old counter:", oldCounter);
-   dispatch(saveResult(res));
-  }, 2000);
- };
-};
-
-**pridanie utility funkcii**
--rozne funkcie na ulahcenie prace/zprehladnenie kodu
--v zlozke store -> utility.js
--napr. utilita pre update objektu:
-export const updateObject = (oldObject, updatedValues) => {
-return {
-  ...oldObject,
-  ...updatedValues
- };
-};
-
-po starom som v reduceri zapisal:
-case actionTypes.DECREMENT:
-return {
-  ...state,
- counter: state.counter - 1
-};
-
-po importe utility updateObject mozem zapisat:
-case actionTypes.DECREMENT:
- return updateObject(state, { counter: state.counter - 1 });
-
-**zostihlenie switch-case v reduceri**
--vpodstate tu ide len o to aby bol na kazdy case len 1 riadok kodu (return)
--vsetko naviac dame do samostatnej funkcie v tom istom subore a pomenujeme ju tak ako sa vola akcia v danom case (akurat v cammelCase)
-
-**Adresarova struktura ./store**
-./store
-  ./actions
-   ./actionTypes.js
-   ./index.js
-   ./volaco1.js
-   ./volaco2.js
-  ./reducers
-   ./volaco1.js
-   ./volaco2.js
-
-**--koniec reduxu**-dostudovat dokumentaciu, hlavne [https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns](https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns) 
-
+[-> redux](./redux.md)
 
 **TESTOVANIE**
  [https://airbnb.io/enzyme/docs/api/](https://airbnb.io/enzyme/docs/api/) 
