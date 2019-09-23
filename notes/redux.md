@@ -1,5 +1,9 @@
+[< back](../README.md)
+
+[< react](./react-tutorial.md)
 # REDUX
 ![](../img/tenor.gif)
+
  [https://redux.js.org](https://redux.js.org/) 
 management stavu, ktory je ulozeny v centralnom store
 `npm install --save redux`

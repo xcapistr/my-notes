@@ -5,6 +5,11 @@ odkazy: [reactjs.org](https://reactjs.org/), [jsbin.com](https://jsbin.com/), [c
 ### REACT
 JS kniznica pre UI
 
+#### Easy start
+`npx create-react-app <nazov-apky>`
+
+npx je sucast npm 5.2+
+
 ### Babel 
 -kompiluje kod napisany v reacte(specialitky ako napr. JSX) a es6(>) do bezneho JS pre prehliadac
 -zakladny komponent moze byt napisany ako funkcia (s velkym pismenom), ktora vrati JSX
@@ -758,7 +763,7 @@ alebo
 
 ### REDUX
 
-[-> redux](./redux.md)
+[redux >](./redux.md)
 
 **TESTOVANIE**
  [https://airbnb.io/enzyme/docs/api/](https://airbnb.io/enzyme/docs/api/) 
@@ -767,34 +772,35 @@ alebo
 
 build app -> manualne testovanie ->**automaticke testy** (unit) -> ship app to server
 tools:
-  -test runner
-	- [ ] vykonava testy a poskytuje Validation Library
-  -> Jest(defaultne pri create-react-app)
-  -testing utilities
-	- [ ] simuluju react apku (stavba DOMu...)
+* test runner
+-vykonava testy a poskytuje Validation Library
+  -> Jest (defaultne pri create-react-app)
+* testing utilities
+	-simuluju react apku (stavba DOMu...)
   -> react test utils (official), enzyme (by rbnb)
 
-co **ne**testovat?
+**co netestovat?**
 -3rd party libraries
 -complex connections (prilis zlozite prepojenia)
 
-co testovat?
+**co testovat?**
 -izolovane jednotky
 -podmienene vystupy
 
-jest jepridany defaultne, takze este potrebujem doinstalovat:
-npm install --save enzyme react-test-renderer enzyme-adapter-react-16
+jest je pridany defaultne, takze este potrebujem doinstalovat:
+`npm install --save enzyme react-test-renderer enzyme-adapter-react-16`
 
 **subory** pomenuvam: _komponent.test.js_
-
+```js
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+```
 shallow - rendrovanie komponentov (len jeden zo sposobov)
 adapter - potrebujem pre nakonfigurovanie enzyme
 
 
-priklad - otestovanie ci komponent obsahuje 2 zanorene elementy (zanorene elementy su funkcionalne komponenty) a ci obsahuje 3 zanorene komponenty ak jeauthenticated
-
+**priklad** - otestovanie ci komponent obsahuje 2 zanorene elementy (zanorene elementy su funkcionalne komponenty) a ci obsahuje 3 zanorene komponenty ak jeauthenticated
+``` js
 import React from "react";
 
 import { configure, shallow } from "enzyme";
@@ -805,37 +811,38 @@ import NavigationItem from "._NavigationItem_NavigationItem";
 
 configure({ adapter: new Adapter() });
 
-**describe**("<NavigationItems />", () => {
-**it(**
-"should render two <NavigationItem /> elements if not autenticatied", 
- () => {
- const wrapper = shallow(<NavigationItems />);
- **expect(**wrapper.find(NavigationItem)**).to**HaveLength(2);
-  }
-**)**;
- 
- **it(**
-  "should render three <NavigationItem /> elements if autenticatied",
-  () => {
-  const wrapper = shallow(<NavigationItems isAuthenticated />);
-  **expect(**wrapper.find(NavigationItem)**).to**HaveLength(3);
-  }
- **)**;
+describe("<NavigationItems />", () => {
+  it(
+    "should render two <NavigationItem /> elements if not autenticatied", 
+    () => {
+      const wrapper = shallow(<NavigationItems />);
+      expect(**wrapper.find(NavigationItem)).toHaveLength(2);
+    }
+  );
+  
+  it(
+    "should render three <NavigationItem /> elements if autenticatied",
+    () => {
+      const wrapper = shallow(<NavigationItems isAuthenticated />);
+      expect(wrapper.find(NavigationItem)).toHaveLength(3);
+    }
+  );
 });
+```
 
+**helper metody**
+`beforeEach()` - vykonana pred testami
+`afterEach()` - po testoch
 
-
-helper metody
-beforeEach() - vykonana pred testami
-afterEach() - po testoch
-
-napr pre rendrovanie elementu zakazdym mozme napisat:
+-napr. pre rendrovanie elementu zakazdym mozme napisat:
+```js
 let wrapper;
 beforeEach(() => {
 wrapper = shallow(<NavigationItems />);
 });
+```
 
-**nastavovanie props** - umoznuje to shallow, takze pre komponent v premennej wrapper mozem zavolat .setProps({key: value})
+**nastavovanie props** - umoznuje to shallow, takze pre komponent v premennej wrapper mozem zavolat `.setProps({key: value})`
 
 **expect metody**
  [https://jestjs.io/docs/en/expect](https://jestjs.io/docs/en/expect) 
@@ -845,11 +852,12 @@ wrapper = shallow(<NavigationItems />);
 
 
 pri **testovani kontajnerov** je problemom redux store
- -pred class dame **export** - aby sme mali okrem default exportu aj pomenovany(default moze byt obaleny v hoc) 
--v teste potom importujem import { Kontainer } from 'path';
+ -pred class dame **export** - aby sme mali okrem default exportu aj pomenovany (default moze byt obaleny v hoc) 
+-v teste potom importujem `import { Kontainer } from 'path';`
 
 -**pri reduxe** musime dat pozor co testovat - nic komplexne, ziadna velka logika
 -testujeme vlastne reducer, tiez ma vlastny test file, **nepotrebujeme enzyme**, testujeme obyc. funkcie, napr.:
+```js
 import reducer from "./auth";
 import * as actionTypes from ".._actions_actionTypes";
 
@@ -864,44 +872,37 @@ describe("auth reducer", () => {
   });
  });
 });
-
-
-
-
-
-**NEXT JS**
+```
+### NEXT JS
 -minimalisticky framework pre servrom rendrovane react aplikacie
 ssr - aj kvoli seo
-### https://github.com/zeit/next.js/
-
 [https://github.com/zeit/next.js/](https://github.com/zeit/next.js/)
 
-
-### npm init
-
-npm install --save next react react-dom
-
-nepouzivam create-react-app
-do package pridame scripty (nahradime defaultne pre react)
+**starter**
+`npm init`
+`npm install --save next react react-dom`
+-nepouzivam create-react-app
+-do package pridame scripty (nahradime defaultne pre react)
+```js
 "scripts": {
-"dev": "next",
-"build": "next build",
-"start": "next start"
+  "dev": "next",
+  "build": "next build",
+  "start": "next start"
 }
+```
+-v next.js sa uz nepouziva react-router, ale zlozky a subory
 
-v next.js sa uz nepouziva react-router, ale zlozky a subory
+`npm run dev` -spusti prostredie, localhost:3000, hot reloading, serverside
 
-npm run dev -spusti prostredie, localhost:3000, hot reloading, serverside
-
-opat mame fuckcne aj class-based komponenty
+-opat mame fuckcne aj class-based komponenty
 
 **linkovanie** - pouzijem next/link element a odkazujem sa na zlozku s index.js suborom (v tomto pripade auth)
-import Link from 'next/link';
-<Link href="_auth"><a>Auth<_a></Link>
+`import Link from 'next/link';`
+`<Link href="_auth"><a>Auth<_a></Link>`
 
 **routing** - pouzijem next/router a ako path nastavim cestu k zlozke s index.js suborom
-import Router from 'next/router';
-<button onClick={() => Router.push('_auth')}>Go to auth<_button>
+`import Router from 'next/router';`
+`<button onClick={() => Router.push('_auth')}>Go to auth<_button>`
 
 **Zlozky**
 -**components** - normalne funkcne komponenty
@@ -920,7 +921,8 @@ import Router from 'next/router';
 
 **Custom error handling**
  [https://github.com/zeit/next.js/#custom-error-handling](https://github.com/zeit/next.js/#custom-error-handling) 
-v adresari so strankami vytvorim subor _error.js (override defaultneho error.js, po zapojeni musim restartovat dev prostredie)
+-v adresari so strankami vytvorim subor _error.js (override defaultneho error.js, po zapojeni musim restartovat dev prostredie)
+```
 import React from "react";
 import Link from "next/link";
 
@@ -940,17 +942,19 @@ const errorPage = () => {
 };
 
 export default errorPage;
-
+```
 **getInitialProps**
-
  [https://github.com/zeit/next.js/#fetching-data-and-component-lifecycle](https://github.com/zeit/next.js/#fetching-data-and-component-lifecycle) 
-_getInitialProps(context)_ - ked chcem asynchronne inicializovat props
-**static async getInitialProps**(context) {
-console.log(context);
-return {};
+`getInitialProps(context)` 
+-ked chcem asynchronne inicializovat props
+```js
+static async getInitialProps(context) {
+  console.log(context);
+  return {};
 }
+```
 -log sa vypise do terminalu(tam kde bezi server), moze vratit promise
-
+```js
 staticasyncgetInitialProps(context) {
 console.log(context);
   const promise = new Promise(
@@ -958,7 +962,7 @@ console.log(context);
   );
 return promise;
 }
-
+```
 **depoloyment**
 npm run build
 -potom cely projektovy adresar zavesim na server kde bezi node.js
@@ -969,9 +973,10 @@ npm run build
  [https://nextjs.org/learn](https://nextjs.org/learn) 
 
 
-**ANIMACIE**
+### ANIMACIE
 mnoho sposobov:
 **1.css transitions:**
+```js
 .Modal {
  ...
  transition: all 0.3s ease-out;
@@ -984,38 +989,41 @@ mnoho sposobov:
  opacity: 0;
  transform: translateY(-100%);
 }
+```
 **2. css animations**
-**.ModalOpen {**
-**animation: openModal 0.4s ease-out forwards;**
-**}**
-**@keyframes openModal {**
-**0% {**
-**opacity: 0;**
-**transform: translateY(-100%);**
-**}**
-**50% {**
-**opacity: 1;**
-**transform: translateY(-20%);**
-**}**
-**100% {**
-**opacity: 1;**
-**transform: translateY(0);**
-**}**
-**}**
-
+```js
+.ModalOpen {
+  animation: openModal 0.4s ease-out forwards;
+}
+@keyframes openModal {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+```
 **3. react transition group**
  [https://reactcommunity.org/react-transition-group/](https://reactcommunity.org/react-transition-group/) 
+```js
 npm install react-transition-group --save
 
-import **Transition** from 'react-transition-group/Transition';
+import Transition from 'react-transition-group/Transition';
 
-**<Transition**
- **in**={this.state.showBlock}
- **timeout**={1000}
+<Transition
+ in={this.state.showBlock}
+ timeout={1000}
  mountOnEnter  _-> znamena ze na zaciatku prida element do domu_
  unmountOnExit _->znamena ze nakonciodoberie element z domu_
 >
- {**state** => (   _-> mozne stavy: entering, entered, exiting, exited_
+ {state => (   _-> mozne stavy: entering, entered, exiting, exited_
   <div
    style={{
     backgroundColor: "red",
@@ -1029,36 +1037,39 @@ import **Transition** from 'react-transition-group/Transition';
    {state}
   </div>
  )}
-**</Transition>**
+</Transition>
+```
 -ak chcem rozny timing pre zobrazenie a zmiznutie nastavim do timeout objekt: 
-**timeout** = {{enter: 400, exit: 1000}}
+`timeout = {{enter: 400, exit: 1000}}`
 
-**Transition events**
-onEnter={()=>...}
-onEnter
-onEntering
-onEntered
-onExit
-onExiting
-onExited
+**Transition events:**
+`onEnter={()=>...}`
+`onEnter`
+`onEntering`
+`onEntered`
+`onExit`
+`onExiting`
+`onExited`
 
 -mozem vyuzit napr. ak ma jedna animacia cakat na druhu
 
 **CSSTransition**
--namiesto import Transition a <Transition> pouzijem import **CSSTransitio**n a <CSSTransition>
+-namiesto import Transition a <Transition> pouzijem import **CSSTransition** a <CSSTransition>
 -rozdiel je, ze v CSSTransition uz nepouzijeme funkcie ale len cisty JSX kod
 -pridame property **classNames**="tiredy-pre-zanorene-jsx"
 
-sposob A
-1. nastavim className="fade-slide"
+* sposob A
+1. nastavim `className="fade-slide"`
 2. potom v css mozem vytvorit triedy:
-.fade-slide-enter.fade-slide-enter-active .fade-slide-exit.fade-slide-exit-active
+`.fade-slide-enter.fade-slide-enter-active`
+ `.fade-slide-exit.fade-slide-exit-active`
 
-(napr. ...-enter {opacity: 0} ...-enter-active {opacity: 1} -> postupne objavenie)
+(napr. `...-enter {opacity: 0} ...-enter-active {opacity: 1}` -> postupne objavenie)
 
-sposobB
--rovno do className vlozim objekt obsahujuci vsetky potrebne css tiredy naviazane na transition lifecycle
+* sposob B
+-rovno do `className` vlozim objekt obsahujuci vsetky potrebne css tiredy naviazane na transition lifecycle
 -napr.:
+```js
 classNames={{
  enter: "",
  enterActive: "ModalOpen",
@@ -1067,35 +1078,39 @@ classNames={{
  appear: "",
  apperarActive: ""
 }}
+```
 
 **Animovanielistov**
-import **TransitionGroup** from "react-transition-group/TransitionGroup";
+`import TransitionGroup from "react-transition-group/TransitionGroup";`
 
--namiesto <ul> pouzijem<TransitionGroup component="ul">
--elementy <li> potom obalim do <CSSTransition classNames="fade" timeout={300}>
+-namiesto `<ul>` pouzijem<`TransitionGroup component="ul">`
+-elementy `<li>` potom obalim do `<CSSTransition classNames="fade" timeout={300}>`
 -nedefinujem property in
+
 **Alternativy k react-transition-group**
 react-motion [https://github.com/chenglou/react-motion](https://github.com/chenglou/react-motion) 
 react-move (emuluje real world fyziku) [https://github.com/react-tools/react-move](https://github.com/react-tools/react-move) 
 react-router-transition [https://github.com/maisano/react-router-transition](https://github.com/maisano/react-router-transition) 
 
 
-**Autentikacia**
+###Autentikacia
 princip v spa - apka posle auth data na server, server kontroluje validnost a zasle spat token (napr. JWT), spa si ulozi token do local storage, potom s kazdou poziadavkou na server posiela aj token v headeri
 
 -pri autentifikacii netreba redux, staci local state v auth kontajneri
 
-firebase auth rest api (tu si skopirujem entry point pre overenie uzivatela alebo registraciu noveho uzivatela a i.)
+**firebase auth rest api** (tu si skopirujem entry point pre overenie uzivatela alebo registraciu noveho uzivatela a i.)
  [https://firebase.google.com/docs/reference/rest/auth/](https://firebase.google.com/docs/reference/rest/auth/) 
 
-predpripravim si auth data objekt (tento priklad je pre prihlaenie pomocou emailu a hesla)
+predpripravim si **auth data objekt** (tento priklad je pre prihlaenie pomocou emailu a hesla)
+```js
 const authData = {
  email: email,
  password: password,
  returnSecureToken: true
 };
-
+```
 a potom poslem post
+```js
 axios
  .post(
  "https://www.googleapis.com/identity...?key=AIzaSyAtaUwKffwLVXMfjktUVkHEcdbnKs_MVz8",
@@ -1107,17 +1122,21 @@ axios
  .catch(err => {
   console.log(err);
  });
-
+```
 **automaticky logout** - nastavim pomocou klasickeho asynchronneho setTimeout a ako hodnotu v milisekundach mozem pouzit hodnotu zaslanu servrom pri overeni (nieco ako expiration time, vo firebase expiresIn) - treba dat pozor na spravne jednotky, v js je timeout v milisekundach, po uplynuti casu vynulujem ulozeny token a user id
+
 **zmena prav vo firebase**
 namiesto nastvenia read a write na true nastavim:
+```js
 {
  "rules": {
   ".read": "auth!=null",
   ".write": "auth!=null"
  }
 }
+```
 Pripadne to specifikujem len pre urcity objekt (v tomto pripade objednavky - orders)
+```js
 {
  “rules”: {
     “ingredients”: {
@@ -1130,53 +1149,44 @@ Pripadne to specifikujem len pre urcity objekt (v tomto pripade objednavky - ord
   }
  }
 }
+```
 
 **Zaslanie tokenu v post requeste**
 musim do post request pridat
-…url…?auth=“ + token
+`…url…?auth=“ + token`
 
-
-
-
-
-
-
-**Webpack**
+### Webpack
 
 feb 2019 zatial pouzivam v3, v4 ma odlisnu syntax
-npm install —save-dev  [webpack@3](mailto:webpack@3) 
+`npm install —save-dev webpack@3`
 
 -webpack je v prvom rade bundler - concatuje subory
--okrem tohoumoznuje optimalizovat subory (napr. obrazky) a zapajat rozlicne pluginy (loaders), transformovat subory, transpilovat new gen JS do klasickeho JS
+-okrem toho umoznuje optimalizovat subory (napr. obrazky) a zapajat rozlicne pluginy (loaders), transformovat subory, transpilovat new gen JS do klasickeho JS
 
-
-￼
-
-fugovanie:
--> entry point (moze ich byt aj viac)
-->Loaders (babel-loader/css-loader)
-  ->Plugins
-   -> output (dist adresar alebo bundle.js) - spravne usporiadany vystup
+**fugovanie:**
+* entry point (moze ich byt aj viac)
+* Loaders (babel-loader/css-loader)
+  * Plugins
+    * output (dist adresar alebo bundle.js) - spravne usporiadany vystup
 
 tutorial - poziadavky:
   next-gen JS, JSX, CSS autoprefix, img imports, optimize code (shrink code)
   -pokial pouzivam git necham ho ignorovat /dist
 
-npm install --save-dev webpack@3 webpack-dev-server
+`npm install --save-dev webpack@3 webpack-dev-server`
 
-pridame script do package (nazov npm modulu)
-"start": "webpack-dev-server"
+-pridame script do package (nazov npm modulu)
+`"start": "webpack-dev-server"`
 
-do projektoveho adresara pridam subor
-webpack.config.js
+-do projektoveho adresara pridam subor
+`webpack.config.js`
 
 **Loaders**
-ako loader pouzijem **babel**
-npm install --save-dev babel-loader babel-core babel-preset-react babel-preset-env
+-ako loader pouzijem **babel**
+`npm install --save-dev babel-loader babel-core babel-preset-react babel-preset-env`
 
-aby pouzival presety musime ho konfigurovat
-**.babelrc**
-
+-aby pouzival presety musime ho konfigurovat v **.babelrc**
+```js
 {
  "presets": [
  [
@@ -1190,44 +1200,48 @@ aby pouzival presety musime ho konfigurovat
  "react"
  ]
 }
+```
+-dalej potrebujem loadnut **css styly**
+`npm install --save-dev css-loader style-loader`
+`npm install --save-devpostcss-loader`
+`npm install --save-devautoprefixer`
+-pre obrazky
+`npm install --save-dev file-loader`
 
-dalej potrebujem loadnut **css styly**
-npm install --save-dev css-loader style-loader
-npm install --save-devpostcss-loader
-npm install --save-devautoprefixer
-pre obrazky
-npm install --save-dev file-loader
+-v mojom pripade bolo potrebne doinstalovat
+`npm i -D webpack-cli`
 
-v mojom pripade bolo potrebne doinstalovat
-npm i -D webpack-cli
+-dalej
+`npm install --save-dev html-webpack-plugin`
 
-dalej
-npm install --save-dev html-webpack-plugin
+## Hooky
 
-# Hooky
+* nova feature ,react 16.8
+* novy sposob ako pisat react komponenty, daju sa pouzit aj len cisto funkcionalne komponenty, pomocou hookov mozem managovat stav
+* ak mam vsetky komponenty funkcionalne, nemusim riesit pripadnu konverziu komponentu na class based
+* hooky su extra funkcie/fetaures ktore mozem volat v SFC komponentoch a pridavaju im vlastnosti ktore mali doteraz len class based
+* config - potreba mat spravnu verziu reactu >= 16.8
 
--nova feature ,react 16.8
--novy sposob ako pisat react komponenty, daju sa pouzit aj len cisto funkcionalne komponenty, pomocou hookov mozem managovat stav
--ak mam vsetky komponenty funkcionalne, nemusim riesit pripadnu konverziu komponentu na class based
--hooky su extra funkcie/fetaures ktore mozem volat v SFC komponentoch a pridavaju im vlastnosti ktore mali doteraz len class based
--config - traba mat spravnu verziu reactu >= 16.8
-
-**useState**
-import { useState } from 'react'
+### useState
+`import { useState } from 'react'`
 -funkcia ktora ma ako argument initialState a vracia inputState( pole o 2 elementoch - _1. current state_, _2. func._ pre manipulovanie so stavom )
 
-const inputState = useState(''); -v parametri rovno inicializujem stav
-inputState[0] - stav
-inputState[1] - funkcia (parametrom je novy stav)
-
+`const inputState = useState('');` 
+-v parametri rovno inicializujem stav
+`inputState[0]` - stav
+`inputState[1]` - funkcia (parametrom je novy stav)
+```js
 const inputChangeHandler = (event) => {
   inputState[1](event.target.value)
-}- nastavenie noveho stavu, handler sa zavola na onChange na inpute
+}
+```
+-nastavenie noveho stavu, handler sa zavola na `onChange` na inpute
 
-cez destructuring (to iste ale namiesto pola mame oddelene konstanty)
-const [todoName, setTodoName] = useState('')
+-cez **destructuring** (to iste ale namiesto pola mame oddelene konstanty)
+`const [todoName, setTodoName] = useState('')`
 
 jednoduchy priklad s todolistom:
+```js
 import React, { useState } from 'react';
 
 const todo = props => {
@@ -1265,35 +1279,41 @@ const todo = props => {
 };
 
 export default todo;
+```
 -tu boli v podstate pouzite 2 stavy, moze to byt prehladnejsie ale dali by sa zmergovat do jedneho stavu (nie je optimalne)
 
+```js
 const [todoState, setTodoState] = useState({
-userInput: ‘’,
-todoList: []
+  userInput: ‘’,
+  todoList: []
 })
+
 const inputChangeHandler = event => {
-setTodoState({
-userInput: event.target.value,
-todoList: todoState.todoList
-})
+  setTodoState({
+    userInput: event.target.value,
+    todoList: todoState.todoList
+  })
 }
 
 const todoAddHandler = () => {
-setTodoState({
-userInput: todoState.userInput,
-todoList: todoState.todoList.concat(todoState.userInput)
-})
+  setTodoState({
+    userInput: todoState.userInput,
+    todoList: todoState.todoList.concat(todoState.userInput)
+  })
 }
-
+```
 **Dolezite pravidlo pre vsetky hooky**
-* hooky (napr. useState) len v top level komponentovej funkcii(nie zanorene vo funkciach komponenu, ani v if else alebo for loop)
+-hooky (napr. useState) len v top level komponentovej funkcii (nie zanorene vo funkciach komponenu, ani v if else alebo for loop)
 
-**useEffect**
- Axios alebo akykolvek http dotaz by som nemal volat v sfc len tak, pretoze sa vykona pri rendrovani (cele sfc je v podstate render funkcia), co nema dobry vplyv na vykon, pouzijeme useEffect hook
+### useEffect
+-podobne ako componentDidMount alebo componentDidUpdate
+-mozem definovat premenne ktorych zmenu sledujem a po ktorej sa zavola funkcia
 
-useEffect ma dva parametre:
-	1. Funkcia ktora sa vykonava (bez druheho parametru by sa vykonavala do nekonecna)
-	2. Pole premennych, ktorych zmenu sledujeme (funkcia sa teda druhy krat vykona len po zmene tychto premennych)
+-dva **parametre**:
+	1. **Funkcia** ktora sa vykonava (bez druheho parametru by sa vykonavala do nekonecna)
+	2. **Pole premennych**, ktorych zmenu sledujeme (funkcia sa teda druhy krat vykona len po zmene tychto premennych)
+
+ -Axios alebo akykolvek http dotaz by som nemal volat v sfc len tak, pretoze sa vykona pri rendrovani (cele sfc je v podstate render funkcia), co nema dobry vplyv na vykon, pouzijeme useEffect hook
 
 ## Recompose
 Kniznica tretej strany/npm modul, sada funkcii a HOC, umoznuje napr. Pouzivat stav a lifecycle vo funkc. komponentoch
