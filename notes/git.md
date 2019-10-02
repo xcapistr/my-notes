@@ -14,7 +14,8 @@
 
 - pridanie lokalneho projektu do prazdneho repa
 
-    ```git add .
+    ```
+    git add .
     git commit -m "first commit"
     git remote add origin <remote repository URL>
     git push -u origin master
@@ -77,6 +78,35 @@
 
     `git push origin <vetva>` -na inu vetvu
 
+### Vratenie zmien
+
+- **revert** - zahodi zmeny v ramci commitu, vytvori novy commit, ktorym sa donstanem do stavu pred commitom, potom pushnem do remote
+
+    `git revert <commit>`
+
+- revertovanie starsieho commitu (niekolko commitov dozadu)
+
+    `git revert HEAD~3` - 3 commity dozadu, treba vyriesit konflikty, takto sa zachovaju vsetky dalsie commity
+
+- revertovanie od-do (radsej revertovat po jednom)
+
+    `git revert HEAD~5..HEAD~1`
+
+- **reset** - resetuje aktualny HEAD do urciteho stavu
+
+    `git reset HEAD~` - zahodi zmeny (nezachova stagged changes)
+
+    `git reset --hard HEAD~` - zahodi vsetky necommitnute zmeny
+
+    `git reset --soft HEAD~` - zahodi len unstagged zmeny
+
+- ****
+
+### Nacitanie zmien z commitu
+- **cherry pick** - dotiahnutie zmien z akehokolvek commitu (ako copy-paste)
+    `git cherry-pick <commit>`
+
+
 ### Nacitanie zmien z remote repo
 
 - **fetch**
@@ -125,13 +155,48 @@
 
     `git push origin :<vetva>`
 
+- **premenovat vetvu** 
+    `git branch -m <new-branch-name>`
+
 ### Merge
-<img src="../img/merge.png" width="400">
+<img src="../img/merge.png" width="400" />
+
+- pridanie zmien z jednej vetvy do druhej
+- vetva z ktorej mergujem sa ukonci
+- 2 typy merge:
+    - **fast forward:** pouzije sa ak existuje priama cesta, presunie hlavnu vetvu tam kde je feature vetva
+    - **3-way:** vznikne novy merge commit ktorym sa zlucia dve vetvy
+
+- postup:
+    - prepnem sa vetvu do ktorej chcem mergovat
+    `git checkout master`
+    - spustim merge
+    `git merge <moja-feature-vetva>`
 
 ### Rebase
-<img src="../img/rebase.png" width="400">
+<img src="../img/rebase.png" width="400" />
+
+- priklad - chcem si rebasnut najnovsieho mastra do feaeture vetvy
+    ```
+    git checkout master
+    git pull
+    git checkout feature-branch
+    git rebase master
+    git pull // urobi novy commit
+    git push
+    ```
 
 ### Stash
+
+- **odlozenie zmien** bokom
+
+    `git stash`
+
+- **aplikovanie** posledneho stashu
+
+    `git stash apply`
+
+
 
 ### Alias
 
