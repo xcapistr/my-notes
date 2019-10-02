@@ -5,3 +5,4 @@
 - [React JS](./notes/react-tutorial.md)
 - [Redux](./notes/redux.md)
 - [Testcafe](./notes/testcafe.md)
+- [Vue](./notes/vue.md)
