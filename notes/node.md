@@ -167,6 +167,15 @@ napr. `fs.writeFileSync(subor, objekt)`, `fs.readFileSync()` ...
 - vyberie len prvky kde je splnena podmienka
 `const pole2 = pole.filter(prvok => podmienka)`
 
+### Rodelenie retazca
+* rozseka retazec podla znaku, vznikne pole retazcov
+
+    `retazec.split('znak')`
+
+### Prevod na velke/male znaky
+`string.toUpperCase()`
+`string.toLowerCase()`
+
 ### Debuggovanie 
 - **V cmd/terminali:**
     
@@ -393,10 +402,6 @@ objekt = {
     });
     ```
 
-### Prevod na velke/male znaky
-`string.toUpperCase()`
-`string.toLowerCase()`
-
 ### Testovanie - Mocha
 - testovaci framework **Mocha** - [mocha.org](https://mochajs.org)
 
@@ -479,120 +484,137 @@ expect(res).toBe(33);
 - pozor!!! - hranica pre uspesny test je 2000ms
 
 ### Testovanie - Express - supertest
--pre vacsiu efektivitu sa pouziva kniznica supertest - od tvorcov expressu (a skombinovat s assertions)
-npm i supertest@2.0.0 --save-dev
+- pre vacsiu efektivitu sa pouziva kniznica supertest - od tvorcov expressu (a skombinovat s assertions)
 
-v server.js, na konci exportovat app
-module.exports.app = app;
+    `npm i supertest@2.0.0 --save-dev`
 
-v testfile : 
-const request = require('supertest');
-var app = require('./server').app;
+- v *server.js*, na konci exportovat app
 
-it('Should return hello world response', (done) => {
-     request(app)
-         .get('/')  // url
-        .expect(200) // status code
-         .expect('Hello world!') // response
-         .end(done) // wraping
-})
+    `module.exports.app = app;`
 
-tak isto mozme pouzit expect
-const request = require('supertest');
-const expect = require('expect');
+- v testfile : 
+    ```js
+    const request = require('supertest');
+    var app = require('./server').app;
 
-var app = require('./server').app;
+    it('Should return hello world response', (done) => {
+         request(app)
+            .get('/')  // url
+            .expect(200) // status code
+            .expect('Hello world!') // response
+            .end(done) // wraping
+    })
+    ```
 
-it('Should not return hello world response', (done) => {
-     request(app)
-         .get('/')
-         .expect(404)
-         .expect((res)=>{
-             expect(res.body).toInclude({
-                 error: 'Page not found'
-             });
-         })
-         .end(done);
-})
+- tak isto mozme pouzit expect
 
-Split
-rozseka retazec podla znaku, vznikne pole retazcov
-retazec.split('znak')
+    ```js
+    const request = require('supertest');
+    const expect = require('expect');
 
-Organzovanie testov pomocou describe()
-pochadza z mocha
+    var app = require('./server').app;
 
-describe('Nazov skupiny', () => { . ........sem dame metody ..........});
+    it('Should not return hello world response', (done) => {
+        request(app)
+            .get('/')
+            .expect(404)
+            .expect((res)=>{
+                expect(res.body).toInclude({
+                    error: 'Page not found'
+                });
+            })
+            .end(done);
+    })
+    ```
 
-Test Spies
+#### Organizovanie testov pomocou describe()
+- pochadza z mocha
 
-overenie ci bolo zavolane spy
+    `describe('Nazov skupiny', () => { ...sem dam metody ...});`
 
-it('Should call the spy correctly', () => {
-   var spy = expect.createSpy();
-   spy();
-   expect(spy).toHaveBeenCalled();
-});
+#### Test Spies
+
+- overenie ci bolo zavolane spy
 
 
--simulovanie/mockovanie db objektov
-rewire
-npm install rewire@2.5.2 --save-dev
+    ```js
+    it('Should call the spy correctly', () => {
+       var spy = expect.createSpy();
+       spy();
+       expect(spy).toHaveBeenCalled();
+    });
+    ```
 
-MONGO DB
-treba stiahnut mongo server pre prislusnu platformu
+#### simulovanie/mockovanie db objektov
+- rewire
+
+    `npm install rewire@2.5.2 --save-dev`
+
+### MONGO DB
+
+- treba stiahnut mongo server pre prislusnu platformu
 premenujem na mongo
-niekde mimo vytvorim priecinok mongo-data
 
-dolezite subory v mongo/bin
+- niekde mimo vytvorim priecinok mongo-data
 
-mongod - nastartuje mongo server
-mongo - umozni pripojenie k servru a pouzivanie prikazov
+- dolezite subory v mongo/bin:
 
-spustenie
-./mongod --dbpath ~/adresar s datami
+    - *mongod* - nastartuje mongo server
 
-verzia
-mongod --version
+    - *mongo* - umozni pripojenie k servru a pouzivanie prikazov
 
-mal by som vidiet port, napr.  27017
+- spustenie:
 
-potom v inom terminali spustime
-./mongo
+    `./mongod --dbpath ~/adresar s datami`
 
-potom mozem spustat prikazy:
-napr. 
-vlozenie
-db.Todos.insert({js objekt})
+- verzia:
+    
+    `mongod --version`
 
-vypisat zaznamy
-db.Todos.find()
+- mal by som vidiet port, napr.  27017
 
-Robomongo - GUI
-na zaciatku dam create, jedine co staci zadat je nazov db spojenia
+- potom v inom terminali spustime `./mongo`
 
-noSQL
--nie tabulky ale kolekcie
--nie zaznamy/riadky ale document
--nie stlpce ale polia v dokumente(rozne properties vramci kolekcie)
+- potom mozem spustat prikazy:
 
-spojenie node JS a mongo db
--npm modul node mongodb native
-npm install mongodb --save
+    - vlozenie
 
-pripojenie k db
-const MongoClient = require('mongodb').MongoClient;
+        `db.Todos.insert({js objekt})`
 
-MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
-  if (err) {
-    return console.log('Unable to connect mongo db server');
-  }
-  console.log('Connected to mongo db server');
+    - vypisat zaznamy
 
-  db.close();
-});
+        `db.Todos.find()`
 
-3.verzia mongoDB modulu s vlozenim zaznamu do kolekcie
+**Robomongo - GUI**
+
+- na zaciatku dam create, jedine co staci zadat je nazov db spojenia
+
+- noSQL
+    - nie tabulky ale kolekcie
+    - nie zaznamy/riadky ale document
+    - nie stlpce ale polia v dokumente(rozne properties vramci kolekcie)
+
+- spojenie node JS a mongo db - npm modul node mongodb native
+    
+    `npm install mongodb --save`
+
+- pripojenie k db:
+    ```js
+    const MongoClient = require('mongodb').MongoClient;
+
+    MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
+      if (err) {
+        return console.log('Unable to connect mongo db server');
+      }
+      console.log('Connected to mongo db server');
+
+      db.close();
+    });
+    ```
+
+**3.verzia mongoDB modulu s vlozenim zaznamu do kolekcie**
+
+```js
 const MongoClient = require('mongodb').MongoClient;
 
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
@@ -614,132 +636,152 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
 
   client.close();
 }); 
+```
 
-ID objektu
-timestamp je zakodovany v _id objektu ak nespecifikujem vlastne _id
+- ID objektu
+    - timestamp je zakodovany v _id objektu ak nespecifikujem vlastne _id
 mongo nenecha vlozit zaznam s uz existujucim _id
 
-z _id mozem vytiahnut timestamp pomocou funkcie getTimestamp()
+    - z _id mozem vytiahnut timestamp pomocou funkcie getTimestamp()
 result.ops[0]._id.getTimestamp()
 
-ak chcem vytvorit ozajstny id objekt importujem najskor do konstanty ObjectID z mongodb
-const {MongoClient, ObjectId} = require('mongodb');
-potom vytvorim var obj = new ObjectID();
+    - ak chcem vytvorit ozajstny id objekt importujem najskor do konstanty ObjectID z mongodb
 
-Object destructuring (uz spominane es6 feature) 
+        `const {MongoClient, ObjectId} = require('mongodb');`
+    - potom vytvorim `var obj = new ObjectID();`
+
+**Object destructuring (uz spominane es6 feature)**
+```js
 var user = {name: 'Andrew', age: 25};
 var {name} = user;
 console.log(name);
 // vypise sa 'Andrew'
+```
 
-mozme to vyuzit pri importe z kniznice
-napr. 
-const {MongoClient, ObjectID} = require('mongodb');
+- mozme to vyuzit pri importe z kniznice
 
-.find() vlastne vracia cursor
+    `const {MongoClient, ObjectID} = require('mongodb');`
 
-Praca s mongodb api
+- `.find()` vlastne vracia cursor
 
-do pola - .find().toArray()
+**Praca s mongodb api**
 
+- do pola - `.find().toArray()`
+```js
 db.collection('Todos').find({parametre}).toArray().then((docs) => {
-
+    ...
 }, (err) => {
-
+    ...
 });
+```
+- API: http://mongodb.github.io/node-mongodb-native/2.0/api/index.html
+- napr. metoda count: http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#count
+- dalsie:
+    - deleteMany
+    - deleteOne
+    - findOneAndDelete (vyhoda ze vramci result mam cely mazany objekt)
+    - findOneAndUpdate(filter, update, options, callback)
 
-API
-http://mongodb.github.io/node-mongodb-native/2.0/api/index.html
+- pri update pouzivame operatory, napr. `$set: {}, $int: {}`
 
-napr. metoda count 
-http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#count
-
-dalsie
-deleteMany
-deleteOne
-findOneAndDelete (vyhoda ze vramci result mam cely mazany objekt)
-findOneAndUpdate(filter, update, options, callback)
-
-pri update pouzivame operatory
-napr. $set: {}, $int: {}
-
-Inicializacia GIT repo
-git init
--do pracovneho adresara pridat subor .gitignore a na prvy riadok napisat 
-node_modules/
-
-pripojenie na remote
-
-git remote add origin https://github.com/cesta do repo.git
-git push -u origin master
-
-Mongoose ORM
+**Mongoose ORM**
 https://mongoosejs.com/
-instalacia cez npm
-import
-var mongoose = require('mongoose');
-treba pridat promisy(defaultne asi obsahuje len callbacky)
-mongoose.Promise = global.Promise;
+
+- instalacia cez npm
+- import: `var mongoose = require('mongoose');`
+- treba pridat promisy(defaultne asi obsahuje len callbacky)
+
+    `mongoose.Promise = global.Promise;`
 
 
-pripojenie k db
+- pripojenie k db:
 
-mongoose.connect('mongodb://localhost:27017/Todoapp');
-
-
-vytvorenie datoveho modelu
-varTodo = mongoose.model('Todo', {
-text: {
-type:String
-    },
-completed: {
-type:Boolean
-    },
-completedAt: {
-type:Number
-    }
-});
+    `mongoose.connect('mongodb://localhost:27017/Todoapp');`
 
 
-priprava noveho dokumentu
+- vytvorenie datoveho modelu
 
+    ```js
+    varTodo = mongoose.model('Todo', {
+        text: {
+            type:String
+        },
+        completed: {
+            type:Boolean
+        },
+        completedAt: {
+            type:Number
+        }
+    });
+    ```
 
+- priprava noveho dokumentu
 
-var newTodo = new Todo({
-    text: 'cook dinner'
-});
+    ```js
+    var newTodo = new Todo({
+        text: 'cook dinner'
+    });
+    ```
 
-ulozenie
+- ulozenie
 
-newTodo.save().then(
-    doc => {
-        console.log('Saving todo...', doc);
-    },
-    e => {
-        console.log('Unable to save todo');
-    }
-);
+    ```js
+    newTodo.save().then(
+        doc => {
+            console.log('Saving todo...', doc);
+        },
+        e => {
+            console.log('Unable to save todo');
+        }
+    );
+    ```
 
-mongoose validatory
-https://mongoosejs.com/docs/validation.html
-type - obmedzenie typu, required - povinnost, trim - oreze medzery pred a za v texte, default- preddefinovana hodnota
+- mongoose validatory
+    https://mongoosejs.com/docs/validation.html
 
-mongoose schemy
-https://mongoosejs.com/docs/guide.html
+    type - obmedzenie typu, required - povinnost, trim - oreze medzery pred a za v texte, default- preddefinovana hodnota
 
-instalacia express js
-npm i express@4.14.0 body-parser@1.15.2 --save
+- mongoose schemy
+    https://mongoosejs.com/docs/guide.html
 
-body parser
+###express js
 
+`npm i express@4.14.0 body-parser@1.15.2 --save`
+
+**minimal server app**
+
+*server.js*
+
+```js
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => res.send('Hello World!'))
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+```
+
+- spustenie: `node app.js`
+
+- spustenie s automatickym reloadom `nodemon app.js` 
+
+    (vyzaduje instalacu npm baliku nodemon)
+
+**body parser**
+
+```js
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
+```
 
-Importovanie bootstrap kniznice
-import 'bootstrap/dist/css/bootstrap.css'
+### Importovanie bootstrap kniznice
+
+`import 'bootstrap/dist/css/bootstrap.css'`
 
 
-Praca s databazou postgres
+### Praca s databazou postgres
 
 https://node-postgres.com/features/connecting
+
 https://knexjs.org/
