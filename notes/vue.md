@@ -1,173 +1,190 @@
 [< back](../README.md)
 # VUE
+![](../img/vue.png)
 
-direktivy - v-...
+- **direktivy**: `v-...`
 
-binding: {{ }} v-bind
-2-way binding: v-model
+- **binding**: `{{ }}` `v-bind:src=""`
 
-v-for="nieco in volaco" :key="nieco.id"
-v-for="(nieco, index) in volaco"
+- **2-way binding**: `v-model`
 
-v-if=""     ->rozhoduje ci sa element prida do DOMu
-v-show    ->skryje sa ako display: none
-v-else
+- **for**: `v-for="nieco in volaco" :key="nieco.id"`,
+`v-for="(nieco, index) in volaco"`
 
-pre props v elementoch, napr img.src -> v-bind:src=""
+- **if**: `v-if=""` - rozhoduje ci sa element prida do DOMu
 
-event handling
-v-on:click=""
+    `v-else`
 
-alebo
+- **show**: `v-show` - skryje sa ako display: none
 
-@click=""
-@mouseover=""
-@submit=""
-@keyup.enter=""
+- **event handling**: `v-on:click=""`
 
-script.js
-var app = new Vue({
-    el: "#app",
-    data: {},
-    computed: {}
-    methods: {}
-});
+    alebo
+    `@click=""`
+    `@mouseover=""`
+    `@submit=""`
+    `@keyup.enter=""`
 
-style binding
-<... :style="{backgroundColor: volaco}">
-class binding
-< :class="nazovTriedy">
-< :class="[nazovTriedy, dalsia]">
-< :class="[podmienka ? nazovTriedy : '']">
-< :class="{nazovTriedy: booleanHodnota}">
+- **script.js:**
+    ```jsx    
+    var app = new Vue({
+        el: "#app",
+        data: {},
+        computed: {}
+        methods: {}
+    });
+    ```
 
-use case -> :class="{ faded: dude.cool < 10, gold: dude.cool > 50 }"
+- **style binding**
+    `<... :style="{backgroundColor: volaco}">`
+- **class binding**
+    `< :class="nazovTriedy">`
+    `< :class="[nazovTriedy, dalsia]">`
+    `< :class="[podmienka ? nazovTriedy : '']">`
+    `< :class="{nazovTriedy: booleanHodnota}">`
 
-!poznamka: ked dam pred prop dvojbodku - :prop="" - mozem pisat do " " JavaScript 
+    use case -> `:class="{ faded: dude.cool < 10, gold: dude.cool > 50 }"`
 
-computed property (lepsie ako metody, vzdy ked dojde k zmene zavislosti, prepocitaju sa)
-computed:{
-     title() {
-          return this.volaco + ' ' + this.cosi
-     }
-}
+    !poznamka: ked dam pred prop dvojbodku - `:prop=""` - mozem pisat do " " JavaScript 
 
-Povolit vyvojove nastroje v chrome
-Vue.config.devtools = true;
+- **computed property** 
+    - lepsie ako metody, vzdy ked dojde k zmene zavislosti, prepocitaju sa
+    ```js
+    computed:{
+         title() {
+              return this.volaco + ' ' + this.cosi
+         }
+    }
+    ```
+    - v class komponente implementujem getter metody `get someProp() { return value }`
 
-component 
-Vue.component('komponent', {
-    props:{
-          message: {
-             type: String, required: true, default: "Hi"
-         },
-        ...
-     },
-    template: `<div>...</div>`,
-    data() {return {}}
-})
+- Povolit **vyvojove nastroje v chrome**
 
-<komponent my-prop="" :my-prop2="">
+    `Vue.config.devtools = true;`
 
--nazov mozem zapisat PascalCaseom alebo kebab-caseom
--props mozme uvadzat s : na zaciatku alebo aj bez ???
-v komponente ich zapisujem ako obycajne pole - props: [...] - alebo ako objekt s atributmi ktore su tiez objekty definujuce vlastnosti - props: { atribut: {}}
--data je funkcia ktora vracia data object
+- **Komponent**
+    ```jsx
+    Vue.component('komponent', {
+        props:{
+              message: {
+                 type: String, required: true, default: "Hi"
+             },
+            ...
+         },
+        template: `<div>...</div>`,
+        data() {return {}}
+    })
+    ```
 
-komponenty v suboroch
+    `<komponent my-prop="" :my-prop2="">`
 
-nazvy: PascalCase.vue
+    - nazov mozem zapisat PascalCaseom alebo kebab-caseom
+    - props mozme uvadzat s : na zaciatku alebo aj bez ???
+    - v komponente ich zapisujem ako obycajne pole - props: [...] - alebo ako objekt s atributmi ktore su tiez objekty definujuce vlastnosti - props: { atribut: {}}
+    - data je funkcia ktora vracia data object
 
-<template></template>
-<script lang="ts">
-    export default {};     
-</script>
-<style lang="sass|css|scss"></style>
+    - komponenty v suboroch
 
-slot
--aby som mohol zvonka pridavat child elementy do komponentu
-v sablone komponentu ... <slot></slot>
--> potom ->
-<komponent>
-     <child-komponent></child-component>
-</komonent>
+        - nazvy: PascalCase.vue
+    - lepsi zapis (html, js, css v 1 subore)
+        ```jsx
+        <template></template>
+        <script lang="ts">
+            export default {};     
+        </script>
+        <style lang="sass|css|scss"></style>
+        ```
+- **Slot**
+    - aby som mohol zvonka pridavat child elementy do komponentu
+    - v sablone komponentu ... `<slot></slot>`
+    - potom
+        ```html    
+        <komponent>
+             <child-komponent></child-component>
+        </komonent>
+        ```
 
--ak vlozim nejake elementy do slotu vnutri komponentu budu sa zobrazovat ako defaultny case v pripade ze zvonka nic nevlozim
-
-
-Events
-$emit
-nejakyEvent() {
-  this.$emit('nejaky-event')     
-}
-
--mozem poslat aj parameter
-this.$emit('nejaky-event', parameter)
--stane sa parametrom kazdej metody ktora sa zavola s eventom
-
-event handler
-<... @nejaky-event="daco" ...>
--> takto mozme v cez komponent zavolat napr. metodu jeho rodica, staci priradit eventu metodu
-
-s parametrom:
-<... @nejaky-event="nejakaFunkciaAleboPrikaz($event)" ...>
-
-Predavanie dat
-rodic -> potomok: pass props
-potomok -> rodic: $emit events
-
-Modifikatory
-.prevent
-modifikator ktory zabrani defaultnemu chovaniu eventu, napr. refresh stranky pri evente submit
-<... @submit.prevent="metoda">
-.once
--event moze nastat len raz
+    - ak vlozim nejake elementy do slotu vnutri komponentu budu sa zobrazovat ako defaultny case v pripade ze zvonka nic nevlozim
 
 
-CLI
--full system, rozne features out of the box
--konfiguracia webpacku, Hot module replacement (HMR)
+- **Events**
 
-npm i -g @vue/cli
+        - emitovanie: `$emit`
+            ```js
+            nejakyEvent() {
+              this.$emit('nejaky-event')     
+            }
+            ``` 
 
-vytvorenie projektu
-vue create nazov-projektu
--enter
--medzernikom vyberam - babel, router, vuex, linter
+        - mozem poslat aj parameter
+            `this.$emit('nejaky-event', parameter)`
+        - stane sa parametrom kazdej metody ktora sa zavola s eventom
 
--projekt sa da vytvorit aj cez vue ui (prikaz vue ui)
+    - **event handler**
+        `<... @nejaky-event="daco" ...>`
+        - takto mozme v cez komponent zavolat napr. metodu jeho rodica, staci priradit eventu metodu
 
--babel - vzdy, >=ES6
--ts - ak potrebujem typy, classes, interfaces
-pwa - progresive web app - stranky s offline features (instaluju sa, push notifikacie, cashovanie)
-router - zoznam routes
-vuex - ako redux pre vue - store pre data (single source of thruth)
-css preprocesory - sass/less/stylus
-unit testy - mocha, chai, jest
-e2e - cypress, nightwatch
+        - s parametrom:
+        `<... @nejaky-event="nejakaFunkciaAleboPrikaz($event)" ...>`
 
-eslint - upozornuje ma na chyby (doporucene zapisy, proavidla), podla toho ako je nakonfigurovany 
-prettier - code formater
+    - **Predavanie dat**
+        - rodic -> potomok: pass props
+        
+        - potomok -> rodic: $emit events
+
+    - **Modifikatory**
+        - `.prevent` - modifikator ktory zabrani defaultnemu chovaniu eventu, napr. refresh stranky pri evente submit
+        `<... @submit.prevent="metoda">`
+        - `.once` - event moze nastat len raz
 
 
-extensions: 
-vetur -zvyraznena syntax
-snippets - scaffold - html sablona pre vue subor
-              -div>ul>li  - doplni html
-              vdata, vprops, von, vif, vfor
+- **CLI**
 
-ref 
-nastavim ako property elementu, napr <... ref="odkazNaEl">
- this.$refs.odkazNaEl
+    - full system, rozne features out of the box
+    - konfiguracia webpacku, Hot module replacement (HMR)
 
-Import Bootstrap 
-npm i bootstrap-vue bootstrap
-v main.ts
-import BootstrapVue from "bootstrap-vue";
-Vue.use(BootstrapVue);
+    `npm i -g @vue/cli`
 
-Animacie
-<transition name="animacia"></transition>
+    - **vytvorenie projektu**
+        `vue create nazov-projektu`
+        - enter
+        - medzernikom vyberam - babel, router, vuex, linter
+
+        - projekt sa da vytvorit aj cez vue ui (prikaz vue ui)
+
+        - babel - vzdy, >=ES6
+        - ts - ak potrebujem typy, classes, interfaces
+
+        - pwa - progresive web app - stranky s offline features (instaluju sa, push notifikacie, cashovanie)
+
+        - router - zoznam routes
+        - vuex - ako redux pre vue - store pre data (single source of thruth)
+        - css preprocesory - sass/less/stylus
+        - unit testy - mocha, chai, jest
+        - e2e - cypress, nightwatch
+        - eslint - upozornuje ma na chyby (doporucene zapisy, proavidla), podla toho ako je nakonfigurovany 
+        - prettier - code formater
+
+
+- **extensions**: 
+    - **vetur** - zvyraznena syntax
+    - snippets: 
+        - **scaffold** - html sablona pre vue subor
+        - div>ul>li  - doplni html
+        - vdata, vprops, von, vif, vfor
+
+- **Ref** 
+    - nastavim ako property elementu, napr `<... ref="odkazNaEl">`, `this.$refs.odkazNaEl`
+
+- **Import Bootstrap**
+    - `npm i bootstrap-vue bootstrap`
+    - v *main.ts*
+    `import BootstrapVue from "bootstrap-vue";`
+    `Vue.use(BootstrapVue);`
+
+### Animacie
+`<transition name="animacia"></transition>`
+
 animate.js vi vlastne animacie
 potom mam v css nove triedy:
 .animacia-enter-active,.animacia-enter, .animacia-enter-to, .animacia-leave-active, ...
