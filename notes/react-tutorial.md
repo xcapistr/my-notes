@@ -1215,6 +1215,7 @@ tutorial - poziadavky:
 `npm install --save-dev html-webpack-plugin`
 
 ## Hooky
+[dokumentacia](https://reactjs.org/docs/hooks-reference.html)
 
 * nova feature ,react 16.8
 * novy sposob ako pisat react komponenty, daju sa pouzit aj len cisto funkcionalne komponenty, pomocou hookov mozem managovat stav
@@ -1314,6 +1315,12 @@ const todoAddHandler = () => {
 	2. **Pole premennych**, ktorych zmenu sledujeme (funkcia sa teda druhy krat vykona len po zmene tychto premennych)
 
  -Axios alebo akykolvek http dotaz by som nemal volat v sfc len tak, pretoze sa vykona pri rendrovani (cele sfc je v podstate render funkcia), co nema dobry vplyv na vykon, pouzijeme useEffect hook
+
+### useContext
+
+### useCallback
+
+
 
 ## Recompose
 Kniznica tretej strany/npm modul, sada funkcii a HOC, umoznuje napr. Pouzivat stav a lifecycle vo funkc. komponentoch

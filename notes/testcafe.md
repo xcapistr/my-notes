@@ -9,7 +9,11 @@
 `npm i --save-dev testcafe`
 
 ### Spustenie testov
-`testcafe chrome <zlozka/>`
+`testcafe chrome <zlozka>`
+
+* headless mode (bez prehliadaca)
+
+  `testcafe chrome:headless <zlozka>`
 
 ### Basic file structure
 .ts or .js file
@@ -82,4 +86,36 @@ priklad:
 ```js
 await t.expect(Selector('#elementId').innerText).eql('text', 'check element text', { timeout: 500 });
 await t.expect(doSomethingAsync()).ok('check that a promise is returned', { allowUnawaitedPromise: true });
+```
+
+### Integracia testov v GitLabe
+2 moznosti:
+  - pouzit TestCafe docker image
+  - instalovat testcafe v projektovom docker image 
+
+viac info:
+  [https://devexpress.github.io/testcafe/documentation/continuous-integration/gitlab.html](https://devexpress.github.io/testcafe/documentation/continuous-integration/gitlab.html)
+
+
+### Ukazkovy testfile
+*qdp.test.ts*
+
+```ts
+import { Selector } from 'testcafe'; // first import testcafe selectors
+
+fixture `gutefrage question detail page` // declare the fixture
+  .page `https://www.gutefrage.net/frage/powerpoint-animationen-gleichzeitig`;  // specify the start page
+
+
+//then create a test and place your code there
+test('Question author must be michael170', async t => {
+  const menuButton = Selector('button.MenuButton[data-ref=menu-button]', { timeout: 30000 });
+  await t
+    .click(menuButton)
+
+    // Use the assertion to check if the actual header text is equal to the expected one
+    .expect(
+      Selector('li.ContentMeta-contextMenuLabel:not(.Link) a.Link').innerText
+    ).eql('michael170');
+});
 ```

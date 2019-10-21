@@ -185,58 +185,66 @@
 ### Animacie
 `<transition name="animacia"></transition>`
 
-animate.js vi vlastne animacie
-potom mam v css nove triedy:
-.animacia-enter-active,.animacia-enter, .animacia-enter-to, .animacia-leave-active, ...
+- **animate.js** vlastne animacie
+- potom mam v css nove triedy:
+`.animacia-enter-active`,`.animacia-enter`, `.animacia-enter-to`, `.animacia-leave-active`, ...
 
 ![](../img/transition.png)
 
--alebo mozem v transition elemente pouzit JS hooks a volat na nich metody, napr. v-on:before-enter, v-on:enter, v-on:after-enter, v-on:enter-cancelled, v-on:before-leave, ...
+- alebo mozem v transition elemente pouzit JS hooks a volat na nich metody, napr. `v-on:before-enter`, `v-on:enter`, `v-on:after-enter`, `v-on:enter-cancelled`, `v-on:before-leave`, ...
 
-Prebliknutie stranky pri nacitani Vue
-v-cloak atribut pridam do elementu
-mozem ho nastylovat v css:
-[v-cloak] { display: none }
+### Prebliknutie stranky pri nacitani Vue
+- **v-cloak** atribut pridam do elementu
+- mozem ho nastylovat v css:
+    `[v-cloak] { display: none }`
 
-Code splitting 
+### Code splitting 
 - v routri mozem povedat webpacku aby componenty rozdeloval na chunks, tie su lazy loaded
 - jeden chunk by mal mat do 70kB, hlavne ten v ktorom je prve nacitanie stranky
 
-Filtre
--podobne ako data, computed a metody mame sekciu filters:{}
--definicia:
-    nazovFiltra: function(paramater) {
-             return parameter.atr1 + ' ' + parameter.atr2  
-     }
--v sablone volam s vyuzitim pipe {{ volaco | nazovFiltra }}
--volaco ide to paramatra funkcie
--filtre su teda specialita pre sablony (computed props su naviac cashovane)
--filter moze mat aj dalsie parametre
-nazovFiltra(paramater, dlzka) {...}
-{{ volaco | nazovFiltra(dlzka) }}
+### Filtre
+- podobne ako data, computed a metody mame sekciu filters:{}
+- definicia:
+    ```js
+        nazovFiltra: function(paramater) {
+                 return parameter.atr1 + ' ' + parameter.atr2  
+         }
+    ```
+- v sablone volam s vyuzitim pipe `{{ volaco | nazovFiltra }}`
+- `volaco` ide do paramatra funkcie
+- filtre su teda specialita pre sablony (computed props su naviac cashovane)
+- filter moze mat aj dalsie parametre
 
-mounted()
-metoda mounted() je lifecycle hook pre vytvorenie vue komponentu, nepatri do methods, stoji samostatne
+`nazovFiltra(paramater, dlzka) {...}`
 
-Event bus
-udalost emitnem z root komponentu
-this.$root.$emit('new-songs',parametre...)
+`{{ volaco | nazovFiltra(dlzka) }}`
 
-zachytim tiez na root elemente, v sekcii elementu mounted (je to funkcia podobne ako data())
-mounted() {
-     this.$root.$on('new-songs', data => {
-         console.log('aha', data)
-     })
- }
+### mounted()
+metoda `mounted()` je lifecycle hook pre vytvorenie vue komponentu, nepatri do methods, stoji samostatne
 
-SASS
--premenne _variables.scss
-v scss @import 'variables';
+### Event bus
+- udalost emitnem z root komponentu
 
-definicia: $text-color: red;
-volanie: color: $text-color
+    `this.$root.$emit('new-songs',parametre...)`
 
-ak chcem variables importovat vsade kde je scss kod, pridam do projektu konfigurak vue.config.js
+- zachytim tiez na root elemente, v sekcii elementu mounted (je to funkcia podobne ako `data()`)
+    ```js
+    mounted() {
+         this.$root.$on('new-songs', data => {
+             console.log('aha', data)
+         })
+    }
+    ```
+
+### SASS
+- premenne *_variables.scss*
+- v scss `@import 'variables';`
+
+- definicia: `$text-color: red;`
+- volanie: `color: $text-color`
+
+- ak chcem variables importovat vsade kde je scss kod, pridam do projektu konfigurak *vue.config.js*
+```js
 module.exports = {
      runtimeCompiler: true,
      css: {
@@ -249,6 +257,7 @@ module.exports = {
          }
     }
 }
+```
 Vytvorenie pluginu
 napr. src/helpers.js
 const MyHelper = {

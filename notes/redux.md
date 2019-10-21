@@ -10,6 +10,8 @@ management stavu, ktory je ulozeny v centralnom store
 
 `const redux = require('redux');`
 
+![](../img/redux-scheme.png)
+
 **1.** najskor treba vytvorit **reducer** - 2 argumenty - state (sem priradim pociatocny stav) a action
 ```js
 const rootReducer = (state = initialState, action) => {
