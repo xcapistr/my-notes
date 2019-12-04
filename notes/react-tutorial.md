@@ -1,5 +1,5 @@
 [< back](../README.md)
-# REACT TUTORIAL
+# LEARNING REACT
 ![](../img/react.jpeg)
 odkazy: [reactjs.org](https://reactjs.org/), [jsbin.com](https://jsbin.com/), [codepen.io](https://codepen.io/) 
 ### REACT
@@ -48,7 +48,7 @@ npx je sucast npm 5.2+
 -ak takto napiseme matody a atributy, nepotrebujeme konstruktor ani metodu super();
 -! lepsie practice je **nepouzit arrow funkciu na metody** (kamil)
 
-### doplnanie poli a objektov
+### spread syntax (rozbitie poli a objektov)
 `const novePole = [...starePole, 1, 2]`
 `const novyObjekt = { ...staryObjekt, novaProp: 2}`
 
@@ -124,16 +124,23 @@ console.log(array1.reduce(reducer, 5));
 
 ### Functional (stateless) vs Class(stageful) components
 **functional component** - najjednoduchsi komponent - len js funkcia -> best practice je pouzivat functional component tak casto ako sa len da (objekt props je v parametri, nemaju state)
+
 **class-based component** - druhy sposob, komponent je objekt triedy, dedi z Component (k objektu props pristupujem cez this.props)
-	* metody sa nezapisuju arrow funkciami
-	* cez props sa mozem odkazovat aj k metodam-> metodu definovanu v rodicovi chceme volat z potomka, zabalime ju do props, a pomocou .bind nabindujeme this a ostatne parametre napr.	`<potomok click={this.funkcia.bind(this, 	dalsieAtributyFunkcie)}`
-	* pouzitie funkcie bez bind -> pomocou arrow funkcie
-	`<potomok click={() => this.funkcia}>`
 	
--potomokovia komponentu v **props.children** -> vsetko co je vnutri
--komponenty by v render funkcii nemali vraciat privela JSX, niektore casti JSX je vhodne preddefinovat a potom len zavolat v ramci return()
--plati ze treba pouzivat co najviac stateless ale kazda feature(autentifikacia, blog, ...) ma pravo mat root komponent ktory je statefull
--statefull pouzivame len ked vieme ze bude potreba manageovat stav alebo mat pristup k lifecycle hooks
+- metody sa nezapisuju arrow funkciami
+
+- cez props sa mozem odkazovat aj k metodam-> metodu definovanu v rodicovi chceme volat z potomka, zabalime ju do props, a pomocou .bind nabindujeme this a ostatne parametre napr.	`<potomok click={this.funkcia.bind(this, 	dalsieAtributyFunkcie)}`
+
+- pouzitie funkcie bez bind -> pomocou arrow funkcie
+`<potomok click={() => this.funkcia}>`
+	
+- potomokovia komponentu v **props.children** -> vsetko co je vnutri
+
+- komponenty by v render funkcii nemali vraciat privela JSX, niektore casti JSX je vhodne preddefinovat a potom len zavolat v ramci return()
+
+- plati ze treba pouzivat co najviac stateless ale kazda feature(autentifikacia, blog, ...) ma pravo mat root komponent ktory je statefull
+
+- statefull pouzivame len ked vieme ze bude potreba manageovat stav alebo mat pristup k lifecycle hooks
 
 ### lifecycle events
 len u stateful komponentov
@@ -1020,8 +1027,8 @@ import Transition from 'react-transition-group/Transition';
 <Transition
  in={this.state.showBlock}
  timeout={1000}
- mountOnEnter  _-> znamena ze na zaciatku prida element do domu_
- unmountOnExit _->znamena ze nakonciodoberie element z domu_
+ mountOnEnter  // na zaciatku prida element do domu
+ unmountOnExit // ze na konci odoberie element z domu
 >
  {state => (   _-> mozne stavy: entering, entered, exiting, exited_
   <div

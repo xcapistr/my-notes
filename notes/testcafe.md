@@ -70,7 +70,7 @@ test('Check property of element', async t => {
 });   
 ```
 
-- e2e testy su async, zmeny sa logicky nedeju ihned ani ich cas zalezi na mnohych faktoroch, neda sa predvidat
+- e2e testy su async, zmeny sa logicky nedeju ihned a ich cas zalezi na mnohych faktoroch, neda sa predvidat
 - preto je potreba mat na niektore akcie extra timeout co ale spomaluje testy
 - Testcafe ma preto **smart assertion query mechanizmus** 
     - spusta sa pokial ako atribut expect funkcie pouzijem DOM selektor alebo promisu
