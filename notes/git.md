@@ -186,6 +186,16 @@
     git push
     ```
 
+- ak nemam v lokalnom repe najnovsi master dotiahnem si ho alebo mergujem s origin/master
+
+- iny postup
+    ```
+    git rebase origin/master
+    git add . // tymto potvrdim ze som vyriesil konflikty
+    git rebase —continue
+    git push —force
+    ```
+
 ### Stash
 
 - **odlozenie zmien** bokom
