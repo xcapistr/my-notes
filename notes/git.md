@@ -213,3 +213,15 @@
 vytvori alias prikazu
 
 `git config --global alias.moj_alias 'zastupeny prikaz'`
+
+### Undo commit(s)
+
+ak sa chcem vratit na nejaky commit z historie a zahodit vsetky novsie zmeny v ramci branche
+
+```
+git reset --hard 0ad5a7a6
+git push -f
+```
+
+<img src="../img/git-undo-commit.png" width="400" />
+
