@@ -192,8 +192,8 @@
     ```
     git rebase origin/master
     git add . // tymto potvrdim ze som vyriesil konflikty
-    git rebase —continue
-    git push —force
+    git rebase —-continue
+    git push —-force
     ```
 
 ### Stash
