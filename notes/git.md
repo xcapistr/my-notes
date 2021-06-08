@@ -250,7 +250,9 @@ git push -u origin main
 ### Change remote repository
 
 check actual remote repo
+
 `git remote -v`
 
 change remote repo
+
 `git remote set-url origin <your repo>`
