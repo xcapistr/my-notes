@@ -256,3 +256,9 @@ git push -u origin main
 - change remote repo
 
     `git remote set-url origin <your repo>`
+    
+### Revert merge
+
+- creates a new commit that reverts changes from last (merge) commit
+
+    `git revert -m 1 <merge-commit-hash>`
