@@ -262,3 +262,21 @@ git push -u origin main
 - creates a new commit that reverts changes from last (merge) commit
 
     `git revert -m 1 <merge-commit-hash>`
+
+### Rename branch
+
+- go to local branch
+
+    `git checkout <old_name>`
+
+- rename local branch
+
+    `git branch -m <new_name>`
+
+- push new local branch and reset the upstream branch
+
+    `git push origin -u <new_name>`
+    
+- delete old remote branch
+
+    `git push origin --delete <old_name>`
