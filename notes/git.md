@@ -280,3 +280,18 @@ git push -u origin main
 - delete old remote branch
 
     `git push origin --delete <old_name>`
+
+### Remove file change from any commit
+
+- rebase file to previous commit
+
+    `git checkout <commit-hash> -- <relative-path-to-file>`
+
+- commit changes
+
+    `git commit -m "revert ..."`
+
+- example
+
+    `git checkout a24b2c70c9fa1f3753413d6499f6b93f1286ef22 -- ./CHANGELOG.md`
+
