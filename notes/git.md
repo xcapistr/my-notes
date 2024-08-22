@@ -100,7 +100,6 @@
 
     `git reset --soft HEAD~` - zahodi len unstagged zmeny
 
-- ****
 
 ### Nacitanie zmien z commitu
 - **cherry pick** - dotiahnutie zmien z akehokolvek commitu (ako copy-paste)
@@ -210,7 +209,11 @@
 
     `git stash list`
 
-    `git stash apply stash@{index stash entry z listu}`
+    `git stash apply stash@{n}`
+
+- aplikovanie a zaroven odstranenie stash entry
+
+    `git stash pop stash@{n}`
 
 
 ### Alias
@@ -226,6 +229,13 @@ ak sa chcem vratit na nejaky commit z historie a zahodit vsetky novsie zmeny v r
 ```
 git reset --hard 0ad5a7a6
 git push -f
+```
+
+alebo vratenie poslednych n commitov
+
+```
+git reset --hard HEAD~n
+git push origin <branch-name> --force
 ```
 
 <img src="../img/git-undo-commit.png" width="400" />
