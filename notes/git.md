@@ -206,6 +206,11 @@
 
     `git stash apply`
 
+- **zoznam** stash entries a aplikovanie konkretneho stashu
+
+    `git stash list`
+
+    `git stash apply stash@{index stash entry z listu}`
 
 
 ### Alias
