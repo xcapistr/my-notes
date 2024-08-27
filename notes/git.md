@@ -310,3 +310,19 @@ git push -u origin main
 
     `git checkout a24b2c70c9fa1f3753413d6499f6b93f1286ef22 -- ./CHANGELOG.md`
 
+### Update older commits with interactive rebase
+
+- rebase older commit 
+
+    `git rebase -i HEAD~<n>` or `git rebase -i <commit-hash>`
+
+- should open editor, for all commits to update rewrite `pick` to `edit`  
+
+- add staged changes
+
+- `git commit --amend`
+
+- `git rebase --continue`
+
+- `git push -f`
+
