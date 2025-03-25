@@ -326,3 +326,11 @@ git push -u origin main
 
 - `git push -f`
 
+### Remove tag and last n commits
+
+- remove tag locally `git tag -d mobile-v1.14.16-586`
+
+- remove tag from remote `git push origin --delete mobile-v1.14.16-586`
+
+- remove last commit `git reset --hard HEAD~1` `git push -f`
+
